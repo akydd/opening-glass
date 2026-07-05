@@ -10,188 +10,66 @@
   arranger = "Alan Kydd."
 }
 
-topFA = {
-    \tuplet 3/2 { f8 aes f }
-  }
+triple =
+#(define-music-function
+  (pitch-one pitch-two)
+  (ly:pitch? ly:pitch?)
+  #{
+     $pitch-one 8 $pitch-two 8 $pitch-one 8
+  #})
 
-topAF = {
-    \tuplet 3/2 { aes8 f aes }
-  }
+triplet =
+#(define-music-function
+  (note-one note-two)
+  (ly:pitch? ly:pitch?)
+  #{
+    \tuplet 3/2 \triple #note-one #note-two
+  #})
 
-topFAcycle =
-\fixed c' {
-  \repeat unfold 2 {\topFA \topAF}
-}
+triplet-pair =
+#(define-music-function
+  (note-one note-two)
+  (ly:pitch? ly:pitch?)
+  #{
+    \triplet #note-one #note-two
+    \triplet #note-two #note-one
+  #})
 
-topCF = {
-    \tuplet 3/2 { c'8 f c' }
-  }
+cycle =
+#(define-music-function
+  (note-one note-two)
+  (ly:pitch? ly:pitch?)
+  #{
+    \fixed c' {
+      \repeat unfold 2 { \triplet-pair #note-one #note-two }
+    }
+  #})
 
-topFC = {
-    \tuplet 3/2 { f8 c' f }
-  }
-
-topCFcycle =
-\fixed c' {
-  \repeat unfold 2 {\topCF \topFC}
-  }
-
-topGC = {
-    \tuplet 3/2 { g8 c' g }
-  }
-
-topCG = {
-    \tuplet 3/2 { c'8 g c' }
-  }
-
-topGCcycle =
-\fixed c' {
-  \repeat unfold 2 {\topGC \topCG}
-}
+topFAcycle = \cycle f aes
+topCFcycle = \cycle c' f
+topGCcycle = \cycle g c'
 
 topAC =
 \fixed c' {
-  \tuplet 3/2 { aes8 c' aes }
-  \tuplet 3/2 { c'8 aes c' }
+  \triplet-pair aes c'
 }
 
 topDend =
 \fixed c' {
-  \tuplet 3/2 { aes8 c' aes }
-  \tuplet 3/2 { c'8 g c' }
+  \triplet aes c'
+  \triplet c' g
 }
 
-topCF_low = {
-  \tuplet 3/2 { c8 f c }
-}
-
-topFC_low = {
-    \tuplet 3/2 { f c8 f }
-}
-
-topCFcycle_low = {
-  \fixed c' {
-    \repeat unfold 2 {\topCF_low \topFC_low}
-    }
-}
-
-topDF = {
-  \tuplet 3/2 { d f d }
-}
-
-topFD = {
-  \tuplet 3/2 { f d f }
-}
-
-topDFcycle = {
-  \fixed c' {
-    \repeat unfold 2 {\topDF \topFD}
-    }
-}
-
-topBE = {
-  \tuplet 3/2 { bes, ees bes, }
-}
-
-topEB = {
-  \tuplet 3/2 { ees bes, ees }
-}
-
-topBEcycle = {
-  \fixed c' {
-    \repeat unfold 2 {\topBE \topEB}
-    }
-}
-
-topCE = {
-  \tuplet 3/2 { c ees c }
-}
-
-topEC = {
-  \tuplet 3/2 { ees c ees }
-}
-
-topCEcycle = {
-  \fixed c' {
-    \repeat unfold 2 {\topCE \topEC}
-  }
-}
-
-topDF_high = {
-  \tuplet 3/2 { d' f d' }
-}
-
-topFD_high = {
-  \tuplet 3/2 { f d' f }
-}
-
-topDFcycle_high = {
-  \fixed c' {
-    \repeat unfold 2 {\topDF_high \topFD_high}
-  }
-}
-
-topAD = {
-  \tuplet 3/2 { aes d' aes }
-}
-
-topDA = {
-  \tuplet 3/2 { d' aes d' }
-}
-
-topADcycle = {
-  \fixed c' {
-    \repeat unfold 2 {\topAD \topDA}
-  }
-}
-
-topAE = {
-  \tuplet 3/2 { aes ees' aes }
-}
-
-topEA = {
-  \tuplet 3/2 { ees' aes ees' }
-}
-
-topEAcycle = {
-  \fixed c' {
-    \repeat unfold 2 {\topEA \topAE}
-  }
-}
-
-topDG = {
-  \tuplet 3/2 { d' g d' }
-}
-
-topGD = {
-  \tuplet 3/2 { g d' g }
-}
-
-topDGcycle = {
-  \fixed c' {
-    \repeat unfold 2 {\topDG \topGD}
-  }
-}
-
-topDAcycle = {
-  \fixed c' {
-    \repeat unfold 2 {\topDA \topAD}
-  }
-}
-
-topDB = {
-  \tuplet 3/2 { d' bes d' }
-}
-
-topBD = {
-  \tuplet 3/2 { bes d' bes }
-}
-
-topDBcycle = {
-  \fixed c' {
-    \repeat unfold 2 {\topDB \topBD}
-  }
-}
+topCFcycle_low = \cycle c f
+topDFcycle = \cycle d f
+topBEcycle = \cycle bes, ees
+topCEcycle = \cycle c ees
+topDFcycle_high = \cycle d' f
+topADcycle = \cycle aes d'
+topEAcycle = \cycle ees' aes
+topDGcycle = \cycle d' g
+topDAcycle = \cycle d' aes
+topDBcycle = \cycle d' bes
 
 topNotes =
 {
@@ -378,10 +256,9 @@ midNotes =
     \midBDcycle
     \midCEcycle
   }
-  \repeat unfold 2 {
+
     \midBDcycle
-  }
-  d'1
+    \midBDcycle~ d'1
 }
 
 bassNotes =
@@ -392,12 +269,12 @@ bassNotes =
   \repeat volta 2 {
     \repeat unfold 3 {
       \fixed c {
-	f1 f1 ees des
+	f1~ 1 ees des
       }
     }
 
 				% measure 13
-    \fixed c { f1 f1 ees bes }
+    \fixed c { f1~ 1 ees bes }
 
 				% measure 17
     \repeat unfold 4 {
@@ -409,22 +286,22 @@ bassNotes =
 				% measure 33
     \repeat unfold 2 {
       \fixed c {
-	f f aes bes
+	f~ 1 aes bes
       }
     }
-    { f f aes bes2 aes2 }
-    { g1 g f f }
+    { f~ 1 aes bes2 aes2 }
+    { g1~ 1 f~ 1 }
   }
 
 				% measure 49
   \repeat unfold 3 {
     \fixed c {
-      f1 f1 ees des
+      f1~ 1 ees des
     }
   }
 
 				% measure 61
-  \fixed c { f1 f ees bes }
+  \fixed c { f1~ 1 ees bes }
 
 				% measure 65
   \repeat unfold 4 {
@@ -436,11 +313,11 @@ bassNotes =
 				% measure 81
   \repeat unfold 2 {
     \fixed c {
-      f f aes bes
+      f~ 1 aes bes
     }
   }
-  { f f aes bes2 aes }
-  { g1 g f f f }
+  { f~ 1 aes bes2 aes }
+  { g1~ 1 f~ 1~ 1 }
   
 }
 
