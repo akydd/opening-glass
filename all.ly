@@ -1,5 +1,7 @@
 \version "2.26.0"
 
+\include "functions.ily"
+
 #(set-default-paper-size "letter")
 
 
@@ -10,40 +12,6 @@
   arranger = "Alan Kydd."
 }
 
-triple =
-#(define-music-function
-  (pitch-one pitch-two)
-  (ly:pitch? ly:pitch?)
-  #{
-     $pitch-one 8 $pitch-two 8 $pitch-one 8
-  #})
-
-triplet =
-#(define-music-function
-  (note-one note-two)
-  (ly:pitch? ly:pitch?)
-  #{
-    \tuplet 3/2 \triple #note-one #note-two
-  #})
-
-triplet-pair =
-#(define-music-function
-  (note-one note-two)
-  (ly:pitch? ly:pitch?)
-  #{
-    \triplet #note-one #note-two
-    \triplet #note-two #note-one
-  #})
-
-cycle =
-#(define-music-function
-  (note-one note-two)
-  (ly:pitch? ly:pitch?)
-  #{
-    \fixed c' {
-      \repeat unfold 2 { \triplet-pair #note-one #note-two }
-    }
-  #})
 
 topFAcycle = \cycle f aes
 topCFcycle = \cycle c' f
@@ -220,7 +188,10 @@ midNotes =
   \time 4/4
 
   \repeat volta 2 {
-    \repeat unfold 4 {
+    \mf\midACcycle
+    \midGBcycle
+	  
+    \repeat unfold 3 {
       \midACcycle
       \midGBcycle
     }
@@ -267,14 +238,17 @@ bassNotes =
   \time 4/4
 
   \repeat volta 2 {
-    \repeat unfold 3 {
+    \fixed c {
+      f1\mf~ 1\< ees\! des\> <>\!
+    }
+    \repeat unfold 2 {
       \fixed c {
-	f1~ 1 ees des
+	f1\~ 1\< ees\! des\> <>\!
       }
     }
 
 				% measure 13
-    \fixed c { f1~ 1 ees bes }
+    \fixed c { f1\!~ 1 ees bes }
 
 				% measure 17
     \repeat unfold 4 {
