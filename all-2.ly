@@ -40,7 +40,7 @@ mid =
     % m. 17
     \midSectionA f aes ees g
     % m. 33
-    \midSectionB bes d c e
+    \midSectionB bes d' c' ees'
   }
 
 				% m. 49
@@ -48,28 +48,29 @@ mid =
 				% m. 65
   \midSectionA f aes ees g
 				% m. 81
-  \addTie { \midSectionB bes d c e }
+  \addTie { \midSectionB bes d' c ees }
 }
 
 bass =
 {
   \key c \minor
   \time 4/4
-
-  \repeat volta 2 {
-    \bassSectionA f ees des bes
-				%m. 17
-    \bassSectionB c bes g
+  \fixed c {
+     \repeat volta 2 {
+       \bassSectionA f ees des bes,
+				% m. 17
+       \bassSectionB c bes, g,
 				% m. 33
-    \bassSectionC f aes bes
-  }
+       \bassSectionC f aes bes
+     }
 
   % m. 49
-  \bassSectionA f ees des bes
+     \bassSectionA f ees des bes
 
-  \bassSectionB c bes g
+     \bassSectionB c bes, g,
 
-  \addTie { \bassSectionC f aes bes }
+     \addTie { \bassSectionC f aes bes }
+  }
 }
 
 \score {
